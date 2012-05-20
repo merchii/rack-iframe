@@ -38,7 +38,7 @@ module Rack
     protected
 
       def user_agent(env)
-        env['HTTP_USER_AGENT']
+        env['HTTP_USER_AGENT'] || []
       end
 
       def set_invalid_etag!(env)
