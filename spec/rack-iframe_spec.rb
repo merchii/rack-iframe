@@ -107,6 +107,15 @@ describe Rack::Iframe do
 
             headers['P3P'].must_equal %(CP="NOI DSP LAW NID")
           end
+
+          it 'should force sending the P3P header if specified via options as :always_send' do
+            request = mock_request(:firefox)
+
+            response = Rack::Iframe.new(@app, :always_send => true).call(request)
+            status, headers, body = response
+
+            headers['P3P'].must_equal %(CP="ALL DSP COR CURa ADMa DEVa OUR IND COM NAV")
+          end
         end
       end
 
