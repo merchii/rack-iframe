@@ -14,6 +14,7 @@ module Rack
       @options[:p3p] ||= DEFAULT_P3P
       @options[:iframe_session_path] ||= DEFAULT_IFRAME_SESSION_PATH
       @options[:env_session_key] ||= DEFAULT_ENV_SESSION_KEY
+      @options[:always_send] ||= false
     end
 
     def call(env)
@@ -50,7 +51,11 @@ module Rack
       end
 
       def set_p3p_header?(env)
-        user_agents?([:ie, :safari], env)
+        if !!@options[:always_send]
+          true
+        else
+          user_agents?([:ie, :safari], env)
+        end
       end
 
       def user_agent?(id, env)
